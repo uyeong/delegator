@@ -3,7 +3,7 @@ let button;
 let input;
 let delegator;
 
-describe('Test of the delegator.', function() {
+describe('Stories of the delegator.', function() {
     before(() => {
         window.__html__ = window.__html__ || {};
         document.body.innerHTML = window.__html__.fixture;
@@ -68,6 +68,44 @@ describe('Test of the delegator.', function() {
             assert.equal(spyClickEvent2.callCount, 1);
 
             capturing.clear();
+        });
+    });
+
+    describe('특정 엘리먼트를 타겟으로한 이벤트 위임을 해제할 수 있다.', () => {
+        it('.off()를 통해 이벤트 위임을 해제할 수 있다.', () => {
+            // Given
+            const spy1 = sinon.spy();
+            const spy2 = sinon.spy();
+
+            delegator.on('click', '.action-btn', spy1);
+            delegator.on('click', '.action-btn', spy2);
+
+            // When
+            delegator.off('click', '.action-btn', spy1);
+
+            button.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+
+            // Then
+            assert.equal(spy1.callCount, 0);
+            assert.equal(spy2.callCount, 1);
+        });
+
+        it('clear()를 통해 이벤트 위임을 일괄 해제할 수 있다.', () => {
+            // Given
+            const spy1 = sinon.spy();
+            const spy2 = sinon.spy();
+
+            delegator.on('click', '.action-btn', spy1);
+            delegator.on('click', '.action-btn', spy2);
+
+            // When
+            delegator.clear();
+
+            button.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+
+            // Then
+            assert.equal(spy1.callCount, 0);
+            assert.equal(spy2.callCount, 0);
         });
     });
 });

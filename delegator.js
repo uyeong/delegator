@@ -59,6 +59,32 @@
                 }
             },
 
+            off(type, selector, listener) {
+                if (!listeners[type] || !listeners[type][selector]) {
+                    return;
+                }
+
+                var targetListeners = listeners[type][selector];
+                var i, n;
+
+                for (i = 0, n = targetListeners.length; i < n; i++) {
+                    if (targetListeners[i] === listener) {
+                        targetListeners.splice(i, 1);
+                        break;
+                    }
+                }
+
+                if (targetListeners.length === 0) {
+                    delete listeners[type][selector];
+                }
+
+                if (JSON.stringify(listeners[type]) === JSON.stringify({})) {
+                    original.removeEventListener(type, delegates[type], options);
+                    delete listeners[type];
+                    delete delegates[type];
+                }
+            },
+
             clear() {
                 var type;
 
