@@ -53,19 +53,19 @@ describe('Stories of the delegator.', function() {
 
         it('캡쳐링 단계에서 이벤트를 위임할 수 있다.', () => {
             // Given
-            const spyClickEvent1 = sinon.spy();
-            const spyClickEvent2 = sinon.spy((e) => e.stopPropagation());
+            const spy1 = sinon.spy();
+            const spy2 = sinon.spy((e) => e.stopPropagation());
             const capturing = createDelegator(original, {capture: true});
 
             // When
-            delegator.on('click', '.action-btn', spyClickEvent1);
-            capturing.on('click', '.action-btn', spyClickEvent2);
+            delegator.on('click', '.action-btn', spy1);
+            capturing.on('click', '.action-btn', spy2);
 
             button.dispatchEvent(new MouseEvent('click', {bubbles: true}));
 
             // Then
-            assert.equal(spyClickEvent1.callCount, 0);
-            assert.equal(spyClickEvent2.callCount, 1);
+            assert.equal(spy1.callCount, 0);
+            assert.equal(spy2.callCount, 1);
 
             capturing.clear();
         });
