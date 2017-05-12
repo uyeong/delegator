@@ -39,9 +39,6 @@
         }
 
         return {
-            target: original,
-            options: options,
-
             on: function(type, selector, listener) {
                 if (!listeners[type]) {
                     listeners[type] = {};
