@@ -63,6 +63,11 @@ describe('Stories of the delegator.', function() {
 
                 input.focus();
 
+                // For Firefox.
+                if (!document.hasFocus()) {
+                    input.dispatchEvent(new FocusEvent('focus'));
+                }
+
                 // Then
                 assert.equal(spy1.callCount, 1);
                 assert.equal(spy2.callCount, 0);
