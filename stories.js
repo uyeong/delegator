@@ -19,7 +19,7 @@ describe('Stories of the delegator.', function() {
     });
 
     describe('특정 엘리먼트를 타겟으로 이벤트를 위임할 수 있다.', () => {
-        it('.on()를 통해 이벤트를 위임할 수 있다.', function() {
+        it('.on()를 통해 이벤트를 위임할 수 있다.', () => {
             // Given
             const spyClickEvent = sinon.spy();
             const spyTouchEvent = sinon.spy();
