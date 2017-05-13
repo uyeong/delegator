@@ -80,7 +80,7 @@
                 }
             },
 
-            off(type, selector, listener) {
+            off: function(type, selector, listener) {
                 if (!listeners[type] || !listeners[type][selector]) {
                     return;
                 }
